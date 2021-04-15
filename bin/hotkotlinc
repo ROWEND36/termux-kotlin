@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+function pop  {
+		a=$(stat -c %y app.jar);
+		echo "-include-runtime -d app.jar $@" > watch.txt ;
+		c=$(stat -c %y app.jar);
+		while [ "$c" == "$a" ]
+		#block until compilation finished
+		do sleep 2;
+		c=$(stat -c %y app.jar);
+		done;
+		echo "File Updated"
+}
+pop $@
